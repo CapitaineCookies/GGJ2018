@@ -5,7 +5,9 @@ using UnityEngine;
 public class PushedButton : MonoBehaviour
 {
 
-	private bool lockButton = false;
+	public bool lockButton = false;
+	public Color feedBackColor = Color.grey;
+	public float feedbackDuration = 0.4f;
 
 	// Use this for initialization
 	void Start ()
@@ -32,19 +34,10 @@ public class PushedButton : MonoBehaviour
 		}
 		SpriteRenderer renderer = GetComponent<SpriteRenderer> ();
 		Color color = renderer.color;
-		if (squenceValidator.PushButton (this.gameObject)) {
-			renderer.color = Color.green;
-		} else {
-			renderer.color = Color.red;
-		}
-		StartCoroutine (resetColor(color));
-
+		squenceValidator.PushButton (this.gameObject);
+		renderer.color = feedBackColor;
+		StartCoroutine (MachineUtil.resetColor(this.gameObject, color, feedbackDuration));
 	}
 
-	IEnumerator resetColor (Color color)
-	{
-		yield return new WaitForSeconds (1.0f);
-		GetComponent<SpriteRenderer> ().color = color;
-		lockButton = false;
-	}
+
 }

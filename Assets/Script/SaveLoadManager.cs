@@ -9,19 +9,18 @@ public static class SaveLoadManager {
 
 	public static void Save(Player player) {
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Open (getFilePath(), FileMode.OpenOrCreate);
+		FileStream stream = File.Open (getFilePath(), FileMode.OpenOrCreate);
 
 		PlayerData data = new PlayerData (player);
 
-		bf.Serialize (file, data);
-		file.Close ();
+		bf.Serialize (stream, data);
+		stream.Close ();
 	}
 
 	public static PlayerData LoadPlayer() {
 		if (File.Exists (getFilePath())) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (getFilePath(), FileMode.Open);
-
 			PlayerData data = bf.Deserialize (file) as PlayerData;
 			file.Close ();
 			return data;
