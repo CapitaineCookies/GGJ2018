@@ -6,7 +6,7 @@ public class SquenceValidator : Validable {
 
 	public PushedButton[] buttons;
 	// Nombre d'element dans la combinaison
-	public int combinaisonSize = 3;
+	public int combinaisonSize = 5;
 
 	public int[] orders;
 	public int current = 0;
@@ -25,7 +25,7 @@ public class SquenceValidator : Validable {
 	// Use this for initialization
 	void Start () {
 		int size = buttons.Length;
-		orders = new int[size];
+		orders = new int[combinaisonSize];
 		for (int i = 0; i < combinaisonSize; i++) {
 			orders[i] = Random.Range(0, buttons.Length);
 		}
