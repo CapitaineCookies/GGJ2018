@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 using System.IO;
 
 public class carnet : MonoBehaviour {
@@ -13,28 +14,65 @@ public class carnet : MonoBehaviour {
 	public int offsetY;
 	public bool debug;
 	public int rayon;
+	public bool pourDessiner;
+	public saveAndExit exit;
 	private bool isDown;
-	[SerializeField] private Color colorInk;
+	public Color colorInk;
+	public Texture2D angle;
+	private string directoryPath;
+	private int nbCarnets;
+	private int currentPage = 0;
 
 	// Use this for initialization
 	void Start () {
+		directoryPath = Application.persistentDataPath + "/carnet/";
+
 		isDown=false;
 		//colorInk = Color.green;
 
 		texture = new Texture2D(width, height);
 		//GetComponent<Renderer>().material.mainTexture = texture;
-		if (debug) {
-			Color colorR = Color.red;
 
-			for (int y = 0; y < texture.height; y++) {
-				for (int x = 0; x < texture.width; x++) {
-					
-					texture.SetPixel (x, y, colorR);
-				}
+		Color colorR = Color.clear;
+		if (debug) {
+			colorR = Color.red;
+		}
+		for (int y = 0; y < texture.height; y++) {
+			for (int x = 0; x < texture.width; x++) {
+				
+				texture.SetPixel (x, y, colorR);
 			}
-			texture.Apply ();
+		}
+		texture.Apply ();
+
+
+
+		if(!Directory.Exists(directoryPath))
+		{    
+			//if it doesn't, create it
+			Directory.CreateDirectory(directoryPath);
+
 		}
 
+		nbCarnets = 0;
+
+		while(File.Exists(directoryPath+"carnet_"+nbCarnets+".png")) {
+			++nbCarnets;
+			//Debug.Log ("une page");
+		}
+		Debug.LogFormat ("nb pages {0}", nbCarnets);
+
+		if (pourDessiner) {
+			saveAndExit sAe = Instantiate (exit);
+			sAe.car = this;
+		} else {
+			if (File.Exists (directoryPath + "carnet_0.png")) {
+				affImage (0);
+			}
+			if (nbCarnets > 1) {
+				
+			}
+		}
 	}
 	
 	// Update is called once per frame
@@ -44,26 +82,43 @@ public class carnet : MonoBehaviour {
 
 	void OnGUI() {
 		Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), texture);
+		if (!pourDessiner && nbCarnets > 1) {
+			Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), angle);
+		}
 	}
 
 	void OnMouseDown() {
-		isDown = true;
-		Debug.Log ("mouse down");
+		if (pourDessiner) {
+			isDown = true;
+		} else {
+
+		}
 	}
 
 	void OnMouseUp() {
-		isDown = false;
+		if (pourDessiner) {
+			isDown = false;
+		} else {
+			currentPage++;
+			if (currentPage == nbCarnets)
+				currentPage = 0;
+			affImage (currentPage);
+		}
 	}
 
 	void OnMouseExit() {
-		isDown = false;
-		//saveToPng (1);
+		if (pourDessiner) {
+			isDown = false;
+			//saveToPng();
+		}
 	}
 
 	void OnMouseOver() {
-		Vector3 mpos = Input.mousePosition;
-		if (isDown) {
-			drawPoint ((int)mpos.x-offsetX,(int)mpos.y-offsetY);
+		if (pourDessiner) {
+			Vector3 mpos = Input.mousePosition;
+			if (isDown) {
+				drawPoint ((int)mpos.x - offsetX, (int)mpos.y - offsetY);
+			}
 		}
 	}
 
@@ -80,28 +135,34 @@ public class carnet : MonoBehaviour {
 		texture.Apply ();
 	}
 
-	void saveToPng(int num) {
+	public void saveToPng() {
+		Debug.Log ("saveToPng");
 		byte[] bytes = texture.EncodeToPNG();
-		File.WriteAllBytes(Application.dataPath + "/test/carnet" + num + ".png", bytes);
+		File.WriteAllBytes(directoryPath+"carnet_"+nbCarnets+".png", bytes);
+		//IEnumerator coroutine = sendPng(texture.EncodeToPNG());
+		//StartCoroutine(coroutine);
 	}
 
-	void sendByte(byte[] file, string name, string ext) {
-		// Create a Web Form
-		var form = new WWWForm();
-		form.AddField("machineId", 2); // TROUVER ID SYSTEME
-		form.AddBinaryData("fileUpload", bytes, name, ext);
-		// Upload to a cgi script    
-		var w = WWW("http://aa-cyclopaedia.fr/machine", form);
-		yield w;
-		if (w.error != null){
-			print(w.error);
-			Application.ExternalCall( "debug", w.error);
-			//print(screenShotURL);
-		}  
-		else{
-			print("Finished Uploading Screenshot");
-			//print(screenShotURL);
-			Application.ExternalCall( "debug", "upload success");
-		}
+	void affImage(int num) {
+		//directoryPath + "carnet_0.png")
+
+		texture.LoadImage(File.ReadAllBytes(directoryPath + "carnet_"+num+".png"));
 	}
+
+	/*IEnumerator sendPng(byte[] file) {
+		Debug.Log ("send png");
+		List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+		formData.Add( new MultipartFormDataSection("machineId=12&field2=bar") );
+		formData.Add( new MultipartFormFileSection("carnet", file, "carnet1.png","image/png") );
+
+		UnityWebRequest www = UnityWebRequest.Post("http://aa-cyclopaedia.fr/machine/upload.php", formData);
+		yield return www.SendWebRequest();
+
+		if(www.isNetworkError || www.isHttpError) {
+			Debug.Log(www.error);
+		}
+		else {
+			Debug.Log("Form upload complete!");
+		}
+	}*/
 }
