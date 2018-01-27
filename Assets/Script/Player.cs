@@ -22,9 +22,9 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Load() {
-		PlayerData data = SaveLoadManager.LoadPlayer ();
-		health = data.health;
-		experience = data.experience;
+		SequenceValidatorData data = SaveLoadManager.LoadPlayer ();
+		//health = data.health;
+		//experience = data.experience;
 
 		GetComponent<PlayerDisplay>().UpdateDisplay ();
 	}

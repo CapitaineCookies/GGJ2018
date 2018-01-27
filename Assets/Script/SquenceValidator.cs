@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SquenceValidator : MonoBehaviour {
+public class SquenceValidator : Validable {
 
-	public List<GameObject> buttons;
+	public PushedButton[] buttons;
 	// Nombre d'element dans la combinaison
 	public int combinaisonSize = 3;
 
-	public List<int> orders;
+	public int[] orders;
 	public int current = 0;
 
 	public List<SpriteRenderer> outputFeedBack;
@@ -18,18 +18,26 @@ public class SquenceValidator : MonoBehaviour {
 	public Color completeColor = Color.green;
 	public float feedbackDuration = 0.8f;
 
+	void Awake() {
+		buttons = GetComponentsInChildren<PushedButton> ();
+	}
+
 	// Use this for initialization
 	void Start () {
-		int size = buttons.Count;
-		orders = new List<int>();
+		int size = buttons.Length;
+		orders = new int[size];
 		for (int i = 0; i < combinaisonSize; i++) {
-			orders.Add (Random.Range(0, buttons.Count));
+			orders[i] = Random.Range(0, buttons.Length);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public override bool IsValid() {
+		return IsComplete ();
 	}
 
 	/**
@@ -61,12 +69,12 @@ public class SquenceValidator : MonoBehaviour {
 
 	// Si true : le groupe est valide
 	public bool IsComplete() {
-		return current >= orders.Count;
+		return current >= orders.Length;
 	}
 
 	// Retourne le prochain boutton a valider
 	GameObject GetNextButton() {
-		return buttons[orders[current]];
+		return buttons[orders[current]].gameObject;
 	}
 
 	void FeedBack(SpriteRenderer output, bool good) {

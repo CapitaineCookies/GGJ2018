@@ -11,21 +11,21 @@ public static class SaveLoadManager {
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream stream = File.Open (getFilePath(), FileMode.OpenOrCreate);
 
-		PlayerData data = new PlayerData (player);
+		//PlayerData data = new PlayerData (player);
 
-		bf.Serialize (stream, data);
+		//bf.Serialize (stream, data);
 		stream.Close ();
 	}
 
-	public static PlayerData LoadPlayer() {
+	public static SequenceValidatorData LoadPlayer() {
 		if (File.Exists (getFilePath())) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (getFilePath(), FileMode.Open);
-			PlayerData data = bf.Deserialize (file) as PlayerData;
+			//PlayerData data = bf.Deserialize (file) as PlayerData;
 			file.Close ();
-			return data;
+			return null;
 		} else {
-			return new PlayerData();
+			return new SequenceValidatorData();
 		}
 	}
 
@@ -35,16 +35,28 @@ public static class SaveLoadManager {
 }
 
 [Serializable]
-public class PlayerData {
+public class MachinData {
 	public float health;
 	public float experience;
 
-	public PlayerData() {
+	public MachinData() {
 
 	}
 
-	public PlayerData(Player player) {
+	public MachinData(Player player) {
 		health = player.health;
 		experience = player.experience;
 	}
+}
+
+[Serializable]
+public abstract class ValidableData {
+
+}
+
+[Serializable]
+public class SequenceValidatorData : ValidableData {
+	float x;
+	float y;
+
 }
