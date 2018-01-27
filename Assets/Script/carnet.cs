@@ -8,10 +8,14 @@ using System.IO;
 public class carnet : MonoBehaviour {
 
 	private Texture2D texture;
-	public int width;
-	public int height;
-	public int offsetX;
-	public int offsetY;
+	public float _width;
+	public float _height;
+	public float _offsetX;
+	public float _offsetY;
+	private int width;
+	private int height;
+	private int offsetX;
+	private int offsetY;
 	public bool debug;
 	public int rayon;
 	public bool pourDessiner;
@@ -22,6 +26,9 @@ public class carnet : MonoBehaviour {
 	private string directoryPath;
 	private int nbCarnets;
 	private int currentPage = 0;
+	private Vector2 oldPos;
+	private Vector2 rapportSize;
+	public Camera cam;
 
 	// Use this for initialization
 	void Start () {
@@ -29,9 +36,11 @@ public class carnet : MonoBehaviour {
 
 		isDown=false;
 		//colorInk = Color.green;
+		setScale();
 
 		texture = new Texture2D(width, height);
-		//GetComponent<Renderer>().material.mainTexture = texture;
+
+
 
 		Color colorR = Color.clear;
 		if (debug) {
@@ -69,18 +78,27 @@ public class carnet : MonoBehaviour {
 			if (File.Exists (directoryPath + "carnet_0.png")) {
 				affImage (0);
 			}
-			if (nbCarnets > 1) {
-				
-			}
 		}
 	}
-	
+
+	void setScale() {
+		//Camera cam = GetComponent<Camera>();
+
+		Vector3 sizes = cam.WorldToScreenPoint(new Vector3(_width,_height));
+		width = (int)sizes.x;
+		height = (int)sizes.y;
+		Vector3 offsets = cam.WorldToScreenPoint(new Vector3(_offsetX,_offsetY));
+		offsetX = (int)offsets.x;
+		offsetY = (int)offsets.y;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
 	void OnGUI() {
+		setScale ();
 		Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), texture);
 		if (!pourDessiner && nbCarnets > 1) {
 			Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), angle);
@@ -90,6 +108,7 @@ public class carnet : MonoBehaviour {
 	void OnMouseDown() {
 		if (pourDessiner) {
 			isDown = true;
+			oldPos = (Vector2) Input.mousePosition;
 		} else {
 
 		}
@@ -104,6 +123,7 @@ public class carnet : MonoBehaviour {
 				currentPage = 0;
 			affImage (currentPage);
 		}
+		setScale ();
 	}
 
 	void OnMouseExit() {
@@ -115,9 +135,15 @@ public class carnet : MonoBehaviour {
 
 	void OnMouseOver() {
 		if (pourDessiner) {
-			Vector3 mpos = Input.mousePosition;
+			Vector3 mpos = (Vector2) Input.mousePosition;
 			if (isDown) {
 				drawPoint ((int)mpos.x - offsetX, (int)mpos.y - offsetY);
+				if (Vector2.Distance (mpos, oldPos) > rayon-1) {
+					oldPos = Vector2.Lerp (mpos, oldPos, 0.5f);
+					drawPoint ((int)oldPos.x - offsetX, (int)oldPos.y - offsetY);
+				}
+				texture.Apply ();
+				oldPos = mpos;
 			}
 		}
 	}
@@ -131,8 +157,6 @@ public class carnet : MonoBehaviour {
 				}
 			}
 		}
-
-		texture.Apply ();
 	}
 
 	public void saveToPng() {

@@ -122,11 +122,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4248979517367122, guid: 871c1e1ade9c6524080f4662d20421e7, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.605
+      value: -0.046
       objectReference: {fileID: 0}
     - target: {fileID: 4248979517367122, guid: 871c1e1ade9c6524080f4662d20421e7, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.047
+      value: 0.108
       objectReference: {fileID: 0}
     - target: {fileID: 4248979517367122, guid: 871c1e1ade9c6524080f4662d20421e7, type: 2}
       propertyPath: m_LocalPosition.z
@@ -152,6 +152,41 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: _width
+      value: -5.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: _height
+      value: 4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: _offsetX
+      value: -2.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: _offsetY
+      value: -4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: pourDessiner
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 399607032}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 871c1e1ade9c6524080f4662d20421e7, type: 2}
   m_IsPrefabParent: 0
