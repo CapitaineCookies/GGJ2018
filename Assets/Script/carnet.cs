@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.IO;
 
 public class carnet : MonoBehaviour {
 
@@ -56,6 +57,7 @@ public class carnet : MonoBehaviour {
 
 	void OnMouseExit() {
 		isDown = false;
+		//saveToPng (1);
 	}
 
 	void OnMouseOver() {
@@ -76,5 +78,30 @@ public class carnet : MonoBehaviour {
 		}
 
 		texture.Apply ();
+	}
+
+	void saveToPng(int num) {
+		byte[] bytes = texture.EncodeToPNG();
+		File.WriteAllBytes(Application.dataPath + "/test/carnet" + num + ".png", bytes);
+	}
+
+	void sendByte(byte[] file, string name, string ext) {
+		// Create a Web Form
+		var form = new WWWForm();
+		form.AddField("machineId", 2); // TROUVER ID SYSTEME
+		form.AddBinaryData("fileUpload", bytes, name, ext);
+		// Upload to a cgi script    
+		var w = WWW("http://aa-cyclopaedia.fr/machine", form);
+		yield w;
+		if (w.error != null){
+			print(w.error);
+			Application.ExternalCall( "debug", w.error);
+			//print(screenShotURL);
+		}  
+		else{
+			print("Finished Uploading Screenshot");
+			//print(screenShotURL);
+			Application.ExternalCall( "debug", "upload success");
+		}
 	}
 }
