@@ -18,7 +18,11 @@ public class Selecter : MonoBehaviour {
 	}
 
 	private void incSelectedPosition() {
-		selectedPosition = (selectedPosition + 1) % selecterRenderer.Count();
+		selectedPosition = (selectedPosition + 1) % Count();
+	}
+
+	public int Count () {
+		return selecterRenderer.Count ();
 	}
 
 }
