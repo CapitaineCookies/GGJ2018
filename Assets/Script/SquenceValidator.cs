@@ -11,6 +11,13 @@ public class SquenceValidator : MonoBehaviour {
 	public List<int> orders;
 	public int current = 0;
 
+	public List<SpriteRenderer> outputFeedBack;
+	public Color idleColor = new Color(138f/255f, 194f/255f, 208.0f/255.0f);
+	public Color trueColor = Color.green;
+	public Color falseColor = Color.red;
+	public Color completeColor = Color.green;
+	public float feedbackDuration = 0.8f;
+
 	// Use this for initialization
 	void Start () {
 		int size = buttons.Count;
@@ -31,11 +38,19 @@ public class SquenceValidator : MonoBehaviour {
 	 * Si c'etait le dernier, le groupe est valide
 	 * Si c'est le mauvais, reinicialise la secance
 	 **/
-	public bool PushButton(GameObject theObject) {
+	public bool PushButton(GameObject input) {
+		bool good = PushButtonIntern (input);
+		foreach(SpriteRenderer output in outputFeedBack) {
+			FeedBack (output, good);
+		}
+		return good;
+	}
+
+	public bool PushButtonIntern(GameObject input) {
 		if(IsComplete()) {
 			return false;
 		}
-		if (theObject.Equals (GetNextButton ())) {
+		if (input.Equals (GetNextButton ())) {
 			current++;
 			return true;
 		} else {
@@ -52,6 +67,20 @@ public class SquenceValidator : MonoBehaviour {
 	// Retourne le prochain boutton a valider
 	GameObject GetNextButton() {
 		return buttons[orders[current]];
+	}
+
+	void FeedBack(SpriteRenderer output, bool good) {
+		if(IsComplete()) {
+			output.color = completeColor;
+			return;
+		}
+		Color before = idleColor;
+		if (good) {
+			output.color = trueColor;
+		} else {
+			output.color = falseColor;
+		}
+		StartCoroutine (MachineUtil.resetColor(output.gameObject, before, feedbackDuration));
 	}
 
 }
