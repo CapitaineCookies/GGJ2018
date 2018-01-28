@@ -5,13 +5,14 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.Audio;
+using UnityEditor;
 
 public class carnet : MonoBehaviour {
 	private AudioSource audioSrc;
 	private Texture2D texture;
 	public float _width;
 	public float _height;
-	public float _offsetX;
+	public int _offsetX;
 	public float _offsetY;
 	private int width;
 	private int height;
@@ -64,7 +65,7 @@ public class carnet : MonoBehaviour {
 		{    
 			//if it doesn't, create it
 			Directory.CreateDirectory(directoryPath);
-
+			FileUtil.CopyFileOrDirectory(Application.dataPath+"/img/regle_MAJUSCULE.png",directoryPath+"carnet_0.png");
 		}
 
 		nbCarnets = 0;
@@ -88,13 +89,27 @@ public class carnet : MonoBehaviour {
 
 	void setScale() {
 		//Camera cam = GetComponent<Camera>();
+		BoxCollider2D coll = GetComponent<BoxCollider2D>();
+		float unitsPerPixel = 2 * cam.orthographicSize  / Screen.height;
 
-		Vector3 sizes = cam.WorldToScreenPoint(new Vector3(_width,_height));
-		width = (int)sizes.x;
-		height = (int)sizes.y;
-		Vector3 offsets = cam.WorldToScreenPoint(new Vector3(_offsetX,_offsetY));
-		offsetX = (int)offsets.x;
-		offsetY = (int)offsets.y;
+		//Vector3 sizes = cam.WorldToScreenPoint(new Vector3(_width,_height));
+		//Vector3 sizes = cam.WorldToScreenPoint(coll.bounds.size);
+		Vector3 sizes = coll.bounds.size;
+		Vector3 origin = cam.WorldToScreenPoint(new Vector3(coll.bounds.min.x, coll.bounds.max.y, 0f));
+		Vector3 extent = cam.WorldToScreenPoint(new Vector3(coll.bounds.max.x, coll.bounds.min.y, 0f));
+
+		// Create rect in screen space and return - does not account for camera perspective
+		//return new Rect(origin.x, Screen.height - origin.y, extent.x - origin.x, origin.y - extent.y);
+		//offsetY = (int)cam.WorldToScreenPoint (new Vector3 (_offsetY, 1, 1)).x;
+		width = Mathf.RoundToInt(extent.x - origin.x);
+		height = Mathf.RoundToInt(origin.y - extent.y);
+
+		Vector3 offsets = cam.WorldToScreenPoint(coll.bounds.center);
+		//offsetX = (int)(Screen.width-width)/2;
+		//offsetY = (int)(Screen.height-height)/2+offsetY;
+		offsetX = (int) Mathf.RoundToInt(origin.x);
+		offsetY = (int) Mathf.RoundToInt(Screen.height - origin.y);
+		Debug.LogFormat("width : {0} ; height : {1} ; offsetX : {2} ; offsetY : {3}",width,height,offsetX,offsetY);
 	}
 
 	// Update is called once per frame
@@ -106,10 +121,11 @@ public class carnet : MonoBehaviour {
 		if (debug) {
 			setScale ();
 		}
-		Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), texture);
-		if (!pourDessiner && nbCarnets > 1) {
-			Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), angle);
-		}
+
+		Graphics.DrawTexture (new Rect (offsetX, offsetY, width, height), texture);
+			if (!pourDessiner && nbCarnets > 1) {
+				Graphics.DrawTexture (new Rect (offsetX, offsetY, width, height), angle);
+			}
 	}
 
 	void OnMouseDown() {
