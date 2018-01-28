@@ -288,6 +288,26 @@ Prefab:
       propertyPath: _offsetY
       value: -4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: rayon
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: colorInk.r
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: colorInk.g
+      value: 0.20588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 114076743766202384, guid: 871c1e1ade9c6524080f4662d20421e7,
+        type: 2}
+      propertyPath: colorInk.b
+      value: 0.20588236
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 871c1e1ade9c6524080f4662d20421e7, type: 2}
   m_IsPrefabParent: 0
