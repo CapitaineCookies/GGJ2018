@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/carnetDessin.unity
-    guid: 72b0e62cc1ae8ec41bb7b4b5c2a67a89
-  - enabled: 1
     path: Assets/carnet.unity
     guid: 71a2366869ff12043b8a803f9c618f4d
   - enabled: 1
+    path: Assets/carnetDessin.unity
+    guid: 72b0e62cc1ae8ec41bb7b4b5c2a67a89
+  - enabled: 1
     path: Assets/MachineScene.unity
     guid: 21a5468bfb2e33447b5b675c847a500a
+  - enabled: 1
+    path: Assets/victory.unity
+    guid: bdc7219374f7bf64bbeab0b5b6d51eba

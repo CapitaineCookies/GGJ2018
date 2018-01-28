@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.Audio;
-using UnityEditor;
 
 public class carnet : MonoBehaviour {
 	private AudioSource audioSrc;
@@ -65,7 +64,7 @@ public class carnet : MonoBehaviour {
 		{    
 			//if it doesn't, create it
 			Directory.CreateDirectory(directoryPath);
-			FileUtil.CopyFileOrDirectory(Application.dataPath+"/img/regle_MAJUSCULE.png",directoryPath+"carnet_0.png");
+			Directory.Move (Application.dataPath+"/img/regle_MAJUSCULE.png",directoryPath+"carnet_0.png");
 		}
 
 		nbCarnets = 0;
