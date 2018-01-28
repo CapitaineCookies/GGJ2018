@@ -21,6 +21,7 @@ public static class SaveLoadManager
 
 	public static void LoadMachine (MachineLoader machineLoader)
 	{
+		File.Delete (getFilePath ());
 		if (File.Exists (getFilePath ())) {
 			BinaryFormatter bf = new BinaryFormatter ();
 			FileStream file = File.Open (getFilePath (), FileMode.Open);
