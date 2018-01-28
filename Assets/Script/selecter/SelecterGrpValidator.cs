@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelecterGrpValidator : MonoBehaviour {
+public class SelecterGrpValidator : Validable {
 
 	public Selecter[] selecters;
 	public int[] targetPositions;
@@ -11,6 +11,7 @@ public class SelecterGrpValidator : MonoBehaviour {
 	public SpriteRenderer[] feedbackRenderer;
 
 	void Awake() {
+		Debug.Log ("SelecterGrpValidator Awake");
 		selecters = GetComponentsInChildren<Selecter> ();
 		feedbackRenderer = GetFeedbackRenderer ();
 	}
@@ -61,5 +62,9 @@ public class SelecterGrpValidator : MonoBehaviour {
 		}
 
 		return available.ToArray();
+	}
+
+	public override bool IsValid() {
+		return CheckSelectionValidity ();
 	}
 }

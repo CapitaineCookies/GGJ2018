@@ -9,19 +9,6 @@ public class PushedButton : MonoBehaviour
 	public Color feedBackColor = Color.grey;
 	public float feedbackDuration = 0.4f;
 
-	// Use this for initialization
-	void Start ()
-	{
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
-
-
 	void OnMouseUpAsButton ()
 	{
 		if (lockButton) {
