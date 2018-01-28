@@ -38,8 +38,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4249834944450300}
-  - component: {fileID: 114795620273461528}
-  - component: {fileID: 61306175041604990}
+  - component: {fileID: 114021126171245114}
+  - component: {fileID: 61704115164924762}
   m_Layer: 0
   m_Name: SelecterButtonGrp
   m_TagString: Feedback
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1486706935953096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.596458, y: -8.510147, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4078126294076418}
@@ -167,7 +167,7 @@ CircleCollider2D:
   m_Offset: {x: -0.14, y: 2.21}
   serializedVersion: 2
   m_Radius: 3.2
---- !u!61 &61306175041604990
+--- !u!61 &61704115164924762
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -176,10 +176,10 @@ BoxCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 6.1, y: 0}
+  m_Offset: {x: 5.75, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -190,7 +190,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 27.64, y: 11.17}
+  m_Size: {x: 29.97, y: 11.72}
   m_EdgeRadius: 0
 --- !u!114 &114006632288242822
 MonoBehaviour:
@@ -209,6 +209,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9f64dc818909e7e4ca6087bd1d4798de, type: 3}
   - {fileID: 21300000, guid: 6aa3c9e111ea552479f8e65a106b656c, type: 3}
   - {fileID: 21300000, guid: 8e674132f67f44c44a5bfefee79d72ba, type: 3}
+--- !u!114 &114021126171245114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1486706935953096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2733b3c27433bc4e9faad3d6eb8a55a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selecters: []
+  targetPositions: 
+  isValid: 0
+  feedbackRenderer: []
 --- !u!114 &114753816085028466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,21 +248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedPosition: 0
---- !u!114 &114795620273461528
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1486706935953096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c8b7f3de2e0dd48bf6c32a3d9cf70c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selecters: []
-  targetPositions: 
-  isValid: 0
-  feedbackRenderer: []
 --- !u!114 &114823776722838176
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -14,6 +14,7 @@ public class SelecterGrpValidator : Validable {
 		Debug.Log ("SelecterGrpValidator Awake");
 		selecters = GetComponentsInChildren<Selecter> ();
 		feedbackRenderer = GetFeedbackRenderer ();
+
 	}
 
 	// Use this for initialization

@@ -40,6 +40,7 @@ public static class SaveLoadManager
 
 	private static void InstanciateMachine (MachineLoader machineLoader, MachineData machineData)
 	{
+		Debug.Log ("Creation d'une nouvelle machine");
 		Transform parent = machineLoader.machine.GetComponent<Transform> ();
 		foreach (ValidableData validableData in machineData.validablesData) {
 			if (validableData is SequenceGroupData) {
@@ -48,6 +49,8 @@ public static class SaveLoadManager
 				machineLoader.DeserializeSelecterButtonGroup (parent, (SelecterButtonGroupData)validableData);
 			} else if (validableData is SelecterRouletteGroupData) {
 				machineLoader.DeserializeSelecterRouletteGroup (parent, (SelecterRouletteGroupData)validableData);
+			} else if (validableData is SwitchButtonGroupData) {
+				machineLoader.DeserializeSwitchButtonGroup (parent, (SwitchButtonGroupData)validableData);
 			}
 		}
 	}
@@ -162,7 +165,7 @@ public class SelecterRouletteGroupData : SelecterGroupData
 [Serializable]
 public class SwitchButtonGroupData : GroupData
 {
-	bool[] statesNeed;
+	public bool[] statesNeed;
 
 	public SwitchButtonGroupData (SwitchButtonGroup data) : base (data)
 	{

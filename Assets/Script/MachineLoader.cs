@@ -8,6 +8,7 @@ public class MachineLoader : MonoBehaviour {
 	public SquenceValidator sequenceGroup;
 	public SelecterButtonGroup selecterButtonGroup;
 	public SelecterRouletteGroup selecterRouletteGroup;
+	public SwitchButtonGroup switchButtonGroup;
 	public Validable[] validables;
 	//public int validableNumberToCreate = 3;
 
@@ -138,5 +139,10 @@ public class MachineLoader : MonoBehaviour {
 		DeserializeSelecterGroup (selecterGroupCpy, data);
 	}
 
+	public void DeserializeSwitchButtonGroup(Transform parent, SwitchButtonGroupData data) {
+		SwitchButtonGroup selecterGroupCpy = Instantiate (switchButtonGroup, parent);
+		DeserializeGroup (selecterGroupCpy, data);
+		selecterGroupCpy.statesNeed = data.statesNeed;
+	}
 	
 }
