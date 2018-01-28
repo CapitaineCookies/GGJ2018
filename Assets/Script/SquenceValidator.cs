@@ -12,10 +12,6 @@ public class SquenceValidator : Validable {
 	public int current = 0;
 
 	public Feedback[] outputFeedBack;
-	public Color idleColor = new Color(138f/255f, 194f/255f, 208.0f/255.0f);
-	public Color trueColor = Color.green;
-	public Color falseColor = Color.red;
-	public Color completeColor = Color.green;
 	public float feedbackDuration = 0.8f;
 
 	void Awake() {
@@ -80,23 +76,22 @@ public class SquenceValidator : Validable {
 	}
 
 	void FeedBack(Feedback output, bool good) {
+		lastClickId++;
 		if(IsComplete()) {
 			output.changeState(FeedbackState.COMPLETE);
 			return;
 		}
-		Color before = idleColor;
 		if (good) {
 			output.changeState(FeedbackState.TRUE);
 		} else {
 			output.changeState(FeedbackState.FALSE);
 		}
-		lastClickId++;
-		StartCoroutine (resetColor(output, before, feedbackDuration, lastClickId));
+		StartCoroutine (resetColor(output, feedbackDuration, lastClickId));
 	}
 
 	private int lastClickId;
 
-	public IEnumerator resetColor (Feedback feedback, Color color, float duration, int clickId)
+	public IEnumerator resetColor (Feedback feedback, float duration, int clickId)
 	{
 		yield return new WaitForSeconds (duration);
 		if (clickId == lastClickId) {
