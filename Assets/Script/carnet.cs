@@ -98,7 +98,7 @@ public class carnet : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		setScale ();
+		//setScale ();
 		Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), texture);
 		if (!pourDessiner && nbCarnets > 1) {
 			Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), angle);
