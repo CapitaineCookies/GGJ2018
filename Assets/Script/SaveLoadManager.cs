@@ -5,22 +5,25 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 
-public static class SaveLoadManager {
+public static class SaveLoadManager
+{
 	
 
-	public static void Save(Machine machine) {
+	public static void Save (Machine machine)
+	{
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream stream = File.Open (getFilePath(), FileMode.OpenOrCreate);
+		FileStream stream = File.Open (getFilePath (), FileMode.OpenOrCreate);
 
 		MachineData machinData = new MachineData (machine);
 		bf.Serialize (stream, machinData);
 		stream.Close ();
 	}
 
-	public static void LoadMachine(MachineLoader machineLoader) {
-		if (File.Exists (getFilePath())) {
+	public static void LoadMachine (MachineLoader machineLoader)
+	{
+		if (File.Exists (getFilePath ())) {
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (getFilePath(), FileMode.Open);
+			FileStream file = File.Open (getFilePath (), FileMode.Open);
 			MachineData data = bf.Deserialize (file) as MachineData;
 			InstanciateMachine (machineLoader, data);
 			file.Close ();
@@ -30,11 +33,13 @@ public static class SaveLoadManager {
 		}
 	}
 
-	private static string getFilePath() {
+	private static string getFilePath ()
+	{
 		return Application.persistentDataPath + "/machine.sav";
 	}
 
-	private static void InstanciateMachine(MachineLoader machineLoader, MachineData machineData) {
+	private static void InstanciateMachine (MachineLoader machineLoader, MachineData machineData)
+	{
 		Transform parent = machineLoader.machine.GetComponent<Transform> ();
 		foreach (ValidableData validableData in machineData.validablesData) {
 			if (validableData is SequenceGroupData) {
@@ -50,106 +55,135 @@ public static class SaveLoadManager {
 }
 
 [Serializable]
-public class MachineData {
+public class MachineData
+{
 	
 	public List<ValidableData> validablesData;
 
-	public MachineData() {
+	public MachineData ()
+	{
 
 	}
 
-	public MachineData(Machine machine) {
-		SquenceValidator[] seqValidables = machine.GetComponentsInChildren <SquenceValidator>();
-		SelecterGrpValidator[] selecterValidables = machine.GetComponentsInChildren <SelecterGrpValidator>();
+	public MachineData (Machine machine)
+	{
+		SquenceValidator[] seqValidables = machine.GetComponentsInChildren <SquenceValidator> ();
+		SelecterGrpValidator[] selecterValidables = machine.GetComponentsInChildren <SelecterGrpValidator> ();
 
-		validablesData = new List<ValidableData>();
+		validablesData = new List<ValidableData> ();
 		foreach (SquenceValidator validable in seqValidables) {
-			validablesData.Add (new SequenceGroupData(validable));
+			validablesData.Add (new SequenceGroupData (validable));
 		}
 		foreach (SelecterGrpValidator validable in selecterValidables) {
-			validablesData.Add (new SelecterGroupData(validable));
+			validablesData.Add (new SelecterGroupData (validable));
 		}
 	}
 
-	public void Deserialize(Machine machine) {
+	public void Deserialize (Machine machine)
+	{
 		
 	}
 }
 
 [Serializable]
-public abstract class ValidableData {
+public abstract class ValidableData
+{
 
 }
 
 [Serializable]
-public class SequenceGroupData : ValidableData {
+public abstract class GroupData : ValidableData
+{
 	public Vector3Data position;
 	public QuaternionData rotation;
 	public Vector3Data scale;
+
+	public GroupData (Validable selecter)
+	{
+		Transform transform = selecter.GetComponent<Transform> ();
+
+		position = new Vector3Data (transform.localPosition);
+		rotation = new QuaternionData (transform.localRotation);
+		scale = new Vector3Data (transform.localScale);
+	}
+}
+
+[Serializable]
+public class SequenceGroupData : GroupData
+{
+	
 	public int[] sequenceToDo;
 
-	public SequenceGroupData(SquenceValidator sequence) {
-		Transform transform = sequence.GetComponent<Transform> ();
-		
-		position = new Vector3Data(transform.localPosition);
-		rotation = new QuaternionData(transform.localRotation);
-		scale = new Vector3Data(transform.localScale);
-		sequenceToDo = sequence.sequenceToDo;
+	public SequenceGroupData (SquenceValidator data) : base (data)
+	{
+		sequenceToDo = data.sequenceToDo;
 	}
 
 }
 
 [Serializable]
-public class SelecterGroupData : ValidableData {
-	public Vector3Data position;
-	public QuaternionData rotation;
-	public Vector3Data scale;
+public class SelecterGroupData : GroupData
+{
+
 	public int[] targetPositions;
 
-	public SelecterGroupData(SelecterGrpValidator sequence) {
-		Transform transform = sequence.GetComponent<Transform> ();
-
-		position = new Vector3Data(transform.localPosition);
-		rotation = new QuaternionData(transform.localRotation);
-		scale = new Vector3Data(transform.localScale);
-		targetPositions = sequence.targetPositions;
+	public SelecterGroupData (SelecterGrpValidator data) : base (data)
+	{
+		targetPositions = data.targetPositions;
 	}
 }
 
 [Serializable]
-public class Vector3Data {
+public class SwitchButtonGroupData : GroupData
+{
+	bool[] statesNeed;
+
+	public SwitchButtonGroupData (SwitchButtonGroup data) : base (data)
+	{
+		statesNeed = data.statesNeed;
+	}
+}
+
+[Serializable]
+public class Vector3Data
+{
 	float x;
 	float y;
 	float z;
 
-	public Vector3Data(Vector3 vector) {
+	public Vector3Data (Vector3 vector)
+	{
 		x = vector.x;
 		y = vector.y;
 		z = vector.z;
 	}
 
-	public Vector3 Deserialize() {
+	public Vector3 Deserialize ()
+	{
 		return new Vector3 (x, y, z);
 	}
 }
 
 
 [Serializable]
-public class QuaternionData {
+public class QuaternionData
+{
 
 	float x;
 	float y;
 	float z;
 	float w;
 
-	public QuaternionData(Quaternion quaternion) {
+	public QuaternionData (Quaternion quaternion)
+	{
 		x = quaternion.x;
 		y = quaternion.y;
 		z = quaternion.z;
 		w = quaternion.w;
 	}
 
-	public Quaternion Deserialize() {
+	public Quaternion Deserialize ()
+	{
 		return new Quaternion (x, y, z, w);
 	}
 }
