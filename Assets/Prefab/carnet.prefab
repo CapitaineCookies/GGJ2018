@@ -163,7 +163,7 @@ MonoBehaviour:
   _height: 0
   _offsetX: 0
   _offsetY: 0
-  debug: 0
+  debug: 1
   rayon: 2
   pourDessiner: 0
   exit: {fileID: 114405848367463040, guid: 27d3cc92d08a3fe4bac76a4d1ce59157, type: 2}
