@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212231274366443008}
   - component: {fileID: 114076743766202384}
   - component: {fileID: 61480431798096788}
+  - component: {fileID: 82338045724611654}
   m_Layer: 0
   m_Name: carnet
   m_TagString: Untagged
@@ -67,6 +68,86 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.57, y: 8.02}
   m_EdgeRadius: 0
+--- !u!82 &82338045724611654
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1483114189319464}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114076743766202384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -90,7 +171,13 @@ MonoBehaviour:
   angle: {fileID: 2800000, guid: 41450865b4b7e7f45a59a6df70404b19, type: 3}
   cam: {fileID: 0}
   pageSounds:
-  - {fileID: 8300000, guid: ac7f0cc55bc97ac4694c7ab4f68788c9, type: 3}
+  - {fileID: 8300000, guid: 3bdc161f57566984794b6d639129c1c8, type: 3}
+  - {fileID: 8300000, guid: 69cbe346b8900bd41b4e4cebf91607f3, type: 3}
+  - {fileID: 8300000, guid: 2d83643148621124e8d5f3508f117d37, type: 3}
+  - {fileID: 8300000, guid: 4ac0d24999ea6c84b9b33677f85c08ea, type: 3}
+  - {fileID: 8300000, guid: cc7db9b423c520d4c97303ccb8f110fc, type: 3}
+  - {fileID: 8300000, guid: 7a1403a39163f6243939876312aa91cb, type: 3}
+  - {fileID: 8300000, guid: d51c2421afedb6047ad381bddb2267f3, type: 3}
   crayonSound: {fileID: 8300000, guid: cbc6e35a539035940b8c791c1272729b, type: 3}
 --- !u!212 &212231274366443008
 SpriteRenderer:
