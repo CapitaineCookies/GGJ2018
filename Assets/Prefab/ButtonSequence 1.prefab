@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4416087537593002}
   - component: {fileID: 212468725558316110}
+  - component: {fileID: 114355228179629836}
   m_Layer: 0
   m_Name: output
-  m_TagString: Untagged
+  m_TagString: Feedback
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,6 +323,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   feedBackColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   feedbackDuration: 0.4
+--- !u!114 &114355228179629836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027912794951984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b236c90511b9ffe42b2c45deb7998457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  trueColor: {r: 0, g: 1, b: 0, a: 1}
+  falseColor: {r: 1, g: 0, b: 0, a: 1}
+  completeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114470110712472628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,10 +354,6 @@ MonoBehaviour:
   sequenceToDo: 
   current: 0
   outputFeedBack: []
-  idleColor: {r: 0.5411765, g: 0.7607843, b: 0.8156863, a: 1}
-  trueColor: {r: 0, g: 1, b: 0, a: 1}
-  falseColor: {r: 1, g: 0, b: 0, a: 1}
-  completeColor: {r: 0, g: 1, b: 0, a: 1}
   feedbackDuration: 0.8
 --- !u!114 &114607809140309362
 MonoBehaviour:
