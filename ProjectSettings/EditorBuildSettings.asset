@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/carnet.unity
     guid: 71a2366869ff12043b8a803f9c618f4d
+  - enabled: 1
+    path: Assets/MachineScene.unity
+    guid: 21a5468bfb2e33447b5b675c847a500a
