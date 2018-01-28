@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Networking;
 using System.IO;
+using UnityEngine.Audio;
 
 public class carnet : MonoBehaviour {
-
+	private AudioSource audioSrc;
 	private Texture2D texture;
 	public float _width;
 	public float _height;
@@ -29,10 +30,13 @@ public class carnet : MonoBehaviour {
 	private Vector2 oldPos;
 	private Vector2 rapportSize;
 	public Camera cam;
+	public AudioClip[] pageSounds;
+	public AudioClip crayonSound;
 
 	// Use this for initialization
 	void Start () {
 		directoryPath = Application.persistentDataPath + "/carnet/";
+		audioSrc = GetComponent<AudioSource> ();
 
 		isDown=false;
 		//colorInk = Color.green;
@@ -74,6 +78,7 @@ public class carnet : MonoBehaviour {
 		if (pourDessiner) {
 			saveAndExit sAe = Instantiate (exit);
 			sAe.car = this;
+			audioSrc.clip = crayonSound;
 		} else {
 			if (File.Exists (directoryPath + "carnet_0.png")) {
 				affImage (0);
@@ -98,7 +103,9 @@ public class carnet : MonoBehaviour {
 	}
 
 	void OnGUI() {
-		//setScale ();
+		if (debug) {
+			setScale ();
+		}
 		Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), texture);
 		if (!pourDessiner && nbCarnets > 1) {
 			Graphics.DrawTexture(new Rect(offsetX, offsetY, width, height), angle);
@@ -109,6 +116,7 @@ public class carnet : MonoBehaviour {
 		if (pourDessiner) {
 			isDown = true;
 			oldPos = (Vector2) Input.mousePosition;
+
 		} else {
 
 		}
@@ -117,11 +125,14 @@ public class carnet : MonoBehaviour {
 	void OnMouseUp() {
 		if (pourDessiner) {
 			isDown = false;
+			audioSrc.Stop ();
 		} else {
 			currentPage++;
 			if (currentPage == nbCarnets)
 				currentPage = 0;
 			affImage (currentPage);
+			audioSrc.clip = pageSounds[(int)Random.Range (0, pageSounds.Length)];
+			audioSrc.Play ();
 		}
 		setScale ();
 	}
@@ -129,13 +140,14 @@ public class carnet : MonoBehaviour {
 	void OnMouseExit() {
 		if (pourDessiner) {
 			isDown = false;
+			audioSrc.Stop ();
 			//saveToPng();
 		}
 	}
 
 	void OnMouseOver() {
 		if (pourDessiner) {
-			Vector3 mpos = (Vector2) Input.mousePosition;
+			Vector2 mpos = (Vector2) Input.mousePosition;
 			if (isDown) {
 				drawPoint ((int)mpos.x - offsetX, (int)mpos.y - offsetY);
 				if (Vector2.Distance (mpos, oldPos) > rayon-1) {
@@ -143,6 +155,12 @@ public class carnet : MonoBehaviour {
 					drawPoint ((int)oldPos.x - offsetX, (int)oldPos.y - offsetY);
 				}
 				texture.Apply ();
+				if (!audioSrc.isPlaying) {
+					audioSrc.Play ();
+				}
+				if (oldPos == mpos) {
+					audioSrc.Stop ();
+				}
 				oldPos = mpos;
 			}
 		}
