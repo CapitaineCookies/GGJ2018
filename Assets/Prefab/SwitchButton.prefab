@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteOn: {fileID: 21300000, guid: b449b0dac54695d4ea9c014b5ce02689, type: 3}
-  spriteOff: {fileID: 21300000, guid: edf098ab3b451d04486079f5241e5736, type: 3}
+  spriteOff: {fileID: 21300000, guid: bfb230a64d7c9ce43b17ae4282190bd4, type: 3}
 --- !u!114 &114547648568272428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: edf098ab3b451d04486079f5241e5736, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bfb230a64d7c9ce43b17ae4282190bd4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
