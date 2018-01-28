@@ -101,11 +101,13 @@ public class MachineLoader : MonoBehaviour {
 
 	void setXYScale(Transform obj, int x, int y,int id) {
 		Debug.LogFormat ("x : {0} ; y : {1}", x,y);
+		BoxCollider2D coll = obj.GetComponent<BoxCollider2D> ();
 		//getNbCases (obj);
-		obj.position = cam.ScreenToWorldPoint(new Vector3(x*gridWidth-gridWidth/2,y*gridHeight+gridHeight/2,2));
+		obj.position = cam.ScreenToWorldPoint(new Vector3(x*gridWidth+gridWidth/2,y*gridHeight+gridHeight/2,1));
 		obj.localScale = new Vector3 (scales[id],scales[id],1);
-		float offsetX = (cam.ScreenToWorldPoint(new Vector3(gridWidth * nbCases [id],1,1)).x - obj.GetComponent<BoxCollider2D>().bounds.size.x) / 2;
-		obj.position -= new Vector3(offsetX,1,1);
+		//float offsetX = (cam.ScreenToWorldPoint(new Vector3(gridWidth * nbCases [id],1,1)).x - coll.bounds.size.x) / 2;
+		//obj.position += new Vector3(coll.offset.x,coll.offset.y,1);
+		Destroy(coll);
 	}
 
 	public void DeserializeSequenceGroup(Transform parent, SequenceGroupData data) {
