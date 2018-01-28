@@ -6,7 +6,8 @@ public class MachineLoader : MonoBehaviour {
 
 	public Machine machine;
 	public SquenceValidator sequenceGroup;
-	public SelecterGrpValidator selecterGroup;
+	public SelecterButtonGroup selecterButtonGroup;
+	public SelecterRouletteGroup selecterRouletteGroup;
 	public Validable[] validables;
 	//public int validableNumberToCreate = 3;
 
@@ -20,9 +21,6 @@ public class MachineLoader : MonoBehaviour {
 	private float[] scales;
 	public Camera cam;
 
-	void Awake() {
-		Debug.Log ("MachineLoader Awake");
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -111,21 +109,34 @@ public class MachineLoader : MonoBehaviour {
 		//obj.position += new Vector3(coll.offset.x,coll.offset.y,1);
 	}
 
-	public void DeserializeSequenceGroup(Transform parent, SequenceGroupData data) {
-		SquenceValidator sequenceGroupCpy = Instantiate (sequenceGroup, parent);
-		Transform transform = sequenceGroupCpy.GetComponent<Transform> ();
+	private void DeserializeGroup(Validable validable, GroupData data) {
+		Transform transform = validable.GetComponent<Transform> ();
 		transform.localPosition = data.position.Deserialize ();
 		transform.localRotation = data.rotation.Deserialize ();
 		transform.localScale = data.scale.Deserialize ();
+	}
+
+	private void DeserializeSelecterGroup(SelecterGrpValidator selecter, SelecterGroupData data) {
+		selecter.targetPositions = data.targetPositions;
+	}
+
+	public void DeserializeSequenceGroup(Transform parent, SequenceGroupData data) {
+		SquenceValidator sequenceGroupCpy = Instantiate (sequenceGroup, parent);
+		DeserializeGroup (sequenceGroupCpy, data);
 		sequenceGroupCpy.sequenceToDo = data.sequenceToDo;
 	}
 
-	public void DeserializeSelecterGroup(Transform parent, SelecterGroupData data) {
-		SelecterGrpValidator selecterGroupCpy = Instantiate (selecterGroup, parent);
-		Transform transform = selecterGroupCpy.GetComponent<Transform> ();
-		transform.localPosition = data.position.Deserialize ();
-		transform.localRotation = data.rotation.Deserialize ();
-		transform.localScale = data.scale.Deserialize ();
-		selecterGroupCpy.targetPositions = data.targetPositions;
+	public void DeserializeSelecterButtonGroup(Transform parent, SelecterGroupData data) {
+		SelecterButtonGroup selecterGroupCpy = Instantiate (selecterButtonGroup, parent);
+		DeserializeGroup (selecterGroupCpy, data);
+		DeserializeSelecterGroup (selecterGroupCpy, data);
 	}
+
+	public void DeserializeSelecterRouletteGroup(Transform parent, SelecterRouletteGroupData data) {
+		SelecterRouletteGroup selecterGroupCpy = Instantiate (selecterRouletteGroup, parent);
+		DeserializeGroup (selecterGroupCpy, data);
+		DeserializeSelecterGroup (selecterGroupCpy, data);
+	}
+
+	
 }

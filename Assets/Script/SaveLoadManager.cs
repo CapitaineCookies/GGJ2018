@@ -44,9 +44,10 @@ public static class SaveLoadManager
 		foreach (ValidableData validableData in machineData.validablesData) {
 			if (validableData is SequenceGroupData) {
 				machineLoader.DeserializeSequenceGroup (parent, (SequenceGroupData)validableData);
-			} else if (validableData is SelecterGroupData) {
-				machineLoader.DeserializeSelecterGroup (parent, (SelecterGroupData)validableData);
-
+			} else if (validableData is SelecterButtonGroupData) {
+				machineLoader.DeserializeSelecterButtonGroup (parent, (SelecterButtonGroupData)validableData);
+			} else if (validableData is SelecterRouletteGroupData) {
+				machineLoader.DeserializeSelecterRouletteGroup (parent, (SelecterRouletteGroupData)validableData);
 			}
 		}
 	}
@@ -68,14 +69,22 @@ public class MachineData
 	public MachineData (Machine machine)
 	{
 		SquenceValidator[] seqValidables = machine.GetComponentsInChildren <SquenceValidator> ();
-		SelecterGrpValidator[] selecterValidables = machine.GetComponentsInChildren <SelecterGrpValidator> ();
+		SelecterButtonGroup[] selecterButtonGroups = machine.GetComponentsInChildren <SelecterButtonGroup> ();
+		SelecterRouletteGroup[] selecterRouletteGroups = machine.GetComponentsInChildren <SelecterRouletteGroup> ();
+		SwitchButtonGroup[] switchButtonGroups = machine.GetComponentsInChildren <SwitchButtonGroup> ();
 
 		validablesData = new List<ValidableData> ();
 		foreach (SquenceValidator validable in seqValidables) {
 			validablesData.Add (new SequenceGroupData (validable));
 		}
-		foreach (SelecterGrpValidator validable in selecterValidables) {
-			validablesData.Add (new SelecterGroupData (validable));
+		foreach (SelecterButtonGroup validable in selecterButtonGroups) {
+			validablesData.Add (new SelecterButtonGroupData (validable));
+		}
+		foreach (SelecterRouletteGroup validable in selecterRouletteGroups) {
+			validablesData.Add (new SelecterRouletteGroupData (validable));
+		}
+		foreach (SwitchButtonGroup validable in switchButtonGroups) {
+			validablesData.Add (new SwitchButtonGroupData (validable));
 		}
 	}
 
@@ -108,10 +117,10 @@ public abstract class GroupData : ValidableData
 	}
 }
 
+
 [Serializable]
 public class SequenceGroupData : GroupData
 {
-	
 	public int[] sequenceToDo;
 
 	public SequenceGroupData (SquenceValidator data) : base (data)
@@ -122,7 +131,7 @@ public class SequenceGroupData : GroupData
 }
 
 [Serializable]
-public class SelecterGroupData : GroupData
+public abstract class SelecterGroupData : GroupData
 {
 
 	public int[] targetPositions;
@@ -130,6 +139,23 @@ public class SelecterGroupData : GroupData
 	public SelecterGroupData (SelecterGrpValidator data) : base (data)
 	{
 		targetPositions = data.targetPositions;
+	}
+}
+
+[Serializable]
+public class SelecterButtonGroupData : SelecterGroupData
+{
+	public SelecterButtonGroupData (SelecterButtonGroup data) : base (data)
+	{
+	}
+}
+
+
+[Serializable]
+public class SelecterRouletteGroupData : SelecterGroupData
+{
+	public SelecterRouletteGroupData (SelecterRouletteGroup data) : base (data)
+	{
 	}
 }
 
