@@ -9,11 +9,5 @@ public class MachineUtil {
 		
 		yield return new WaitForSeconds (duration);
 		source.GetComponent<SpriteRenderer> ().color = color;
-
-		// Comportement si c'est un bouton
-		PushedButton button = source.GetComponent<PushedButton>();
-		if (button != null) {
-			button.lockButton = false;
-		}
 	}
 }
