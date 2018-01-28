@@ -78,16 +78,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8696bd297a01742b09c36a457b2bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 176
-  height: 297
-  offsetX: 299
-  offsetY: 18
+  _width: 0
+  _height: 0
+  _offsetX: 0
+  _offsetY: 0
   debug: 0
   rayon: 2
   pourDessiner: 0
   exit: {fileID: 114405848367463040, guid: 27d3cc92d08a3fe4bac76a4d1ce59157, type: 2}
   colorInk: {r: 0.7794118, g: 0.13181227, b: 0.13181227, a: 1}
   angle: {fileID: 2800000, guid: 41450865b4b7e7f45a59a6df70404b19, type: 3}
+  cam: {fileID: 0}
+  pageSounds:
+  - {fileID: 8300000, guid: ac7f0cc55bc97ac4694c7ab4f68788c9, type: 3}
+  crayonSound: {fileID: 8300000, guid: cbc6e35a539035940b8c791c1272729b, type: 3}
 --- !u!212 &212231274366443008
 SpriteRenderer:
   m_ObjectHideFlags: 1
