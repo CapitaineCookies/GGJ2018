@@ -8,7 +8,7 @@ public class SquenceValidator : Validable {
 	// Nombre d'element dans la combinaison
 	public int combinaisonSize = 5;
 
-	public int[] orders;
+	public int[] sequenceToDo;
 	public int current = 0;
 
 	public List<SpriteRenderer> outputFeedBack;
@@ -19,16 +19,17 @@ public class SquenceValidator : Validable {
 	public float feedbackDuration = 0.8f;
 
 	void Awake() {
+		Debug.Log ("SquenceValidator Awake");
 		buttons = GetComponentsInChildren<PushedButton> ();
+		int size = buttons.Length;
+		sequenceToDo = new int[combinaisonSize];
+		for (int i = 0; i < combinaisonSize; i++) {
+			sequenceToDo[i] = Random.Range(0, buttons.Length);
+		}
 	}
 
 	// Use this for initialization
 	void Start () {
-		int size = buttons.Length;
-		orders = new int[combinaisonSize];
-		for (int i = 0; i < combinaisonSize; i++) {
-			orders[i] = Random.Range(0, buttons.Length);
-		}
 	}
 	
 	// Update is called once per frame
@@ -69,12 +70,12 @@ public class SquenceValidator : Validable {
 
 	// Si true : le groupe est valide
 	public bool IsComplete() {
-		return current >= orders.Length;
+		return current >= sequenceToDo.Length;
 	}
 
 	// Retourne le prochain boutton a valider
 	GameObject GetNextButton() {
-		return buttons[orders[current]].gameObject;
+		return buttons[sequenceToDo[current]].gameObject;
 	}
 
 	void FeedBack(SpriteRenderer output, bool good) {
