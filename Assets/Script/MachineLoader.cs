@@ -16,6 +16,7 @@ public class MachineLoader : MonoBehaviour {
 	private int gridHeight;
 	public int nbLignes = 3;
 	private int nbCol;
+	private int minCase = 100;
 	//private int nbModules = 2;
 	private int[] nbCases;
 	private int[] offsets;
@@ -68,11 +69,15 @@ public class MachineLoader : MonoBehaviour {
 		Vector3 taillePx = cam.WorldToScreenPoint (taille);
 		float rapport = taille.x / taille.y;
 		int nbCasesTot = 1+(int)(gridHeight * rapport) / gridWidth;
+		if (nbCasesTot < minCase) {
+			minCase = nbCasesTot;
+		}
+		Debug.LogFormat ("nbCases : {0}", nbCasesTot);
 		nbCases [id] = nbCasesTot;
 		scales[id] = gridHeight/taillePx.y;
 		taillePx = Vector3.Scale(taillePx,new Vector3(scales[id],scales[id],scales[id]));
 		//offsets[id] = (int) ((gridWidth*nbCasesTot)-taillePx.x)/2;
-		Debug.LogFormat ("nbCases : {0} ; scale : {1} ; offset : {2}", nbCasesTot,scales[id],offsets[id]);
+		//Debug.LogFormat ("nbCases : {0} ; scale : {1} ; offset : {2}", nbCasesTot,scales[id],offsets[id]);
 		//return nbCases+1;
 		//Destroy(coll);
 		coll.enabled = false;
@@ -80,7 +85,7 @@ public class MachineLoader : MonoBehaviour {
 
 	void addComponentsLine(int ligne) {
 		int currentCol = 0;
-		while (currentCol < nbCol) {
+		while (currentCol+minCase <= nbCol) {
 			int rd = (int)Random.Range (0, validables.Length);
 			if (nbCases [rd] + currentCol <= nbCol) {
 				Validable variable = Instantiate (validables[rd], machine.GetComponent<Transform>());
@@ -101,7 +106,7 @@ public class MachineLoader : MonoBehaviour {
 	}
 
 	void setXYScale(Transform obj, int x, int y,int id) {
-		Debug.LogFormat ("x : {0} ; y : {1}", x,y);
+		//Debug.LogFormat ("x : {0} ; y : {1}", x,y);
 		//BoxCollider2D coll = obj.GetComponent<BoxCollider2D> ();
 		//getNbCases (obj);
 		obj.position = cam.ScreenToWorldPoint(new Vector3(x*gridWidth+gridWidth/2,y*gridHeight+gridHeight/2,1));

@@ -11,7 +11,8 @@ public class Victory : MonoBehaviour {
 		directoryPath = Application.persistentDataPath + "/carnet/";
 		Directory.Move(directoryPath+"carnet_0.png",directoryPath+"start.png");
 
-		File.Copy(Application.dataPath+"/img/message_fin.png",directoryPath+"carnet_0.png");
+		//File.Copy(Application.dataPath+"/img/message_fin.png",directoryPath+"carnet_0.png");
+		File.Copy (System.IO.Path.Combine(Application.streamingAssetsPath, "message_fin.png"),directoryPath+"carnet_0.png");
 	}
 	
 	// Update is called once per frame

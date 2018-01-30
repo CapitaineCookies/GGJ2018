@@ -64,7 +64,8 @@ public class carnet : MonoBehaviour {
 		{    
 			//if it doesn't, create it
 			Directory.CreateDirectory(directoryPath);
-			Directory.Move (Application.dataPath+"/img/regle_MAJUSCULE.png",directoryPath+"carnet_0.png");
+			//File.Copy (Application.dataPath+"/img/regle_MAJUSCULE.png",directoryPath+"carnet_0.png");
+			File.Copy (System.IO.Path.Combine(Application.streamingAssetsPath, "regle_MAJUSCULE.png"),directoryPath+"carnet_0.png");
 		}
 
 		nbCarnets = 0;
@@ -164,10 +165,10 @@ public class carnet : MonoBehaviour {
 		if (pourDessiner) {
 			Vector2 mpos = (Vector2) Input.mousePosition;
 			if (isDown) {
-				drawPoint ((int)mpos.x - offsetX, (int)mpos.y - offsetY);
+				drawPoint ((int)mpos.x - offsetX, (int)mpos.y + offsetY);
 				if (Vector2.Distance (mpos, oldPos) > rayon-1) {
 					oldPos = Vector2.Lerp (mpos, oldPos, 0.5f);
-					drawPoint ((int)oldPos.x - offsetX, (int)oldPos.y - offsetY);
+					drawPoint ((int)oldPos.x - offsetX, (int)oldPos.y + offsetY);
 				}
 				texture.Apply ();
 				if (!audioSrc.isPlaying) {
